@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>FitLogic — Fitness Intelligence</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.4/dist/chart.umd.min.js"></script>
+</head>
+<body>
+
+<div id="intro" class="intro">
+  <div class="intro-glow"></div>
+  <div class="intro-logo">F</div>
+  <div class="intro-name">FitLogic</div>
+  <div class="intro-tag">FITNESS INTELLIGENCE</div>
+  <div class="intro-line"><i></i></div>
+</div>
+
+
+<div id="authScreen" class="auth-screen">
+  <div class="auth-orb orb-one"></div><div class="auth-orb orb-two"></div>
+  <div class="auth-card">
+    <div class="auth-brand"><span class="brand-mark">F</span><div><b>FitLogic</b><small>Fitness Intelligence</small></div></div>
+    <div class="auth-copy"><span class="eyebrow">PERSONAL FITNESS INTELLIGENCE</span><h1>Your plan.<br><em>Your data.</em></h1><p>Log in to keep your nutrition, activity, goals and progress separate for every user.</p></div>
+    <div class="auth-tabs"><button class="auth-tab active" data-auth-mode="login">Log in</button><button class="auth-tab" data-auth-mode="register">Create account</button></div>
+    <form id="authForm">
+      <div id="nameField" class="auth-field hidden"><label>Full name</label><input id="authName" type="text" placeholder="Your name"></div>
+      <div class="auth-field"><label>Email</label><input id="authEmail" type="email" required placeholder="you@example.com"></div>
+      <div class="auth-field"><label>Password</label><input id="authPassword" type="password" required minlength="6" placeholder="At least 6 characters"></div>
+      <button class="primary full auth-submit" type="submit" id="authSubmit">Log in</button>
+      <p id="authMessage" class="auth-message"></p>
+    </form>
+    <div class="auth-note">Your account keeps your fitness data separate from other users on this local project.</div>
+  </div>
+</div>
+
+<div class="app" id="appShell" style="display:none">
+<aside class="sidebar">
+  <div class="brand"><span class="brand-mark">F</span><div><b>FitLogic</b><small>Fitness Intelligence</small></div></div>
+  <nav>
+    <button class="nav active" data-page="home">⌂ <span>Home</span></button>
+    <button class="nav" data-page="food">◌ <span>Food Tracker</span></button>
+    <button class="nav" data-page="activity">↗ <span>Activity</span></button>
+    <button class="nav" data-page="lifestyle">⌁ <span>Daily Lifestyle</span></button>
+    <button class="nav" data-page="goals">◎ <span>My Plan</span></button>
+    <button class="nav" data-page="analytics">▥ <span>Analytics</span></button>
+  </nav>
+  <div class="smart-side">
+    <div class="mini-label">FITLOGIC ENGINE</div>
+    <strong>Personalized, not generic.</strong>
+    <p>Your calorie and protein targets are calculated from your profile and goal.</p>
+  </div>
+  <div class="sidebar-foot">FITLOGIC<br><span>Fitness Intelligence Platform</span></div>
+</aside>
+
+<main>
+<header class="topbar">
+  <div><div class="eyebrow">FITNESS INTELLIGENCE SYSTEM</div><h1 id="pageTitle">Good afternoon 👋</h1></div>
+  <div class="profile"><div class="avatar" id="avatar">SP</div><div><b id="profileName">My FitLogic</b><small id="profileGoal">Set up your plan</small></div><button id="themeBtn">☼</button><button id="logoutBtn" class="logout-btn">Log out</button></div>
+</header>
+
+<!-- HOME -->
+<section id="home" class="page active-page">
+  <div class="home-hero">
+    <div>
+      <span class="pill">● PERSONALIZED DAILY PLAN</span>
+      <h2>Know what to eat.<br><em>Know what to do next.</em></h2>
+      <p>FitLogic calculates your recommended calorie and protein targets, tracks what you consume and tells you what you still need today.</p>
+      <div class="hero-actions"><button class="primary" data-open="food">＋ Log food</button><button class="secondary" data-open="goals">⚙ My plan</button></div>
+    </div>
+    <div class="hero-ring"><div><b id="ringValue">0%</b><small>daily progress</small></div></div>
+  </div>
+
+  <div class="recommendation" id="mainRecommendation"><span>✦</span><div><b>Set up your plan</b><p>Enter your age, height, weight, activity level and goal to get personalized calorie and protein recommendations.</p></div><button data-open="goals">Set up →</button></div>
+
+  <div class="stat-grid">
+    <div class="stat"><span>CALORIES EATEN</span><strong id="calIn">0</strong><small>of <b id="calTargetSmall">—</b></small><div class="bar"><i id="calInBar"></i></div></div>
+    <div class="stat"><span>CALORIES LEFT</span><strong id="calLeft">—</strong><small>recommended for today</small><div class="bar"><i id="calLeftBar"></i></div></div>
+    <div class="stat"><span>PROTEIN</span><strong id="protein">0g</strong><small>of <b id="proteinTargetSmall">—</b></small><div class="bar"><i id="proteinBar"></i></div></div>
+    <div class="stat"><span>STEPS</span><strong id="steps">0</strong><small>of 10,000 target</small><div class="bar"><i id="stepsBar"></i></div></div>
+  </div>
+
+  <div class="two-col">
+    <div class="panel">
+      <div class="panel-head"><div><span class="eyebrow">WHAT TO DO NEXT</span><h3>Today's recommendation</h3></div></div>
+      <div id="nextMeal" class="next-meal"></div>
+    </div>
+    <div class="panel">
+      <div class="panel-head"><div><span class="eyebrow">ENERGY BALANCE</span><h3>Today</h3></div><span class="badge" id="balanceBadge">Set your plan</span></div>
+      <div class="energy">
+        <div class="energy-row"><span>Food intake</span><b id="energyIn">0 kcal</b></div><div class="energy-track"><i id="energyInBar"></i></div>
+        <div class="energy-row"><span>Activity + movement</span><b id="energyOut">0 kcal</b></div><div class="energy-track muted"><i id="energyOutBar"></i></div>
+        <div class="balance"><span>Net balance</span><strong id="balanceValue">—</strong></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="home-sections">
+    <button class="overview-card" data-open="food"><span class="card-icon">🍽</span><div><span class="eyebrow">NUTRITION</span><h3>Food Tracker</h3><p id="homeFoodSummary">Nothing logged yet.</p></div><b>→</b></button>
+    <button class="overview-card" data-open="activity"><span class="card-icon">🏃</span><div><span class="eyebrow">MOVEMENT</span><h3>Activity</h3><p id="homeActivitySummary">Nothing logged yet.</p></div><b>→</b></button>
+    <button class="overview-card" data-open="lifestyle"><span class="card-icon">⌁</span><div><span class="eyebrow">LIFESTYLE</span><h3>Daily Lifestyle</h3><p id="homeLifeSummary">0 steps · 0 km</p></div><b>→</b></button>
+    <button class="overview-card" data-open="goals"><span class="card-icon">◎</span><div><span class="eyebrow">MY PLAN</span><h3>Goals & Targets</h3><p id="homeGoalSummary">Not configured</p></div><b>→</b></button>
+  </div>
+</section>
+
+<!-- FOOD -->
+<section id="food" class="page">
+  <div class="section-title"><div><span class="eyebrow">NUTRITION</span><h2>Food Tracker</h2><p>Type the food and quantity. FitLogic does the nutrition math.</p></div><button class="primary" id="addFood">＋ Add food</button></div>
+  <div class="recommendation compact" id="foodRecommendation"></div>
+  <div class="macro-grid">
+    <div class="macro"><span>CALORIES</span><b id="foodCal">0</b><small>eaten</small></div>
+    <div class="macro"><span>CALORIES LEFT</span><b id="foodCalLeft">—</b><small>to daily target</small></div>
+    <div class="macro"><span>PROTEIN</span><b id="foodProtein">0g</b><small id="foodProteinLeft">target —</small></div>
+    <div class="macro"><span>CARBS / FATS</span><b id="foodCarbs">0g</b><small id="foodFats">0g fat</small></div>
+  </div>
+  <div class="panel"><div class="panel-head"><h3>Today's meals</h3><span class="eyebrow" id="foodCount">0 ITEMS</span></div><div id="foodList" class="list"></div></div>
+  <div class="food-help">Try <b>100g chicken breast</b> · <b>2 eggs</b> · <b>1 banana</b> · <b>3 chapati</b> · <b>80g oats</b> · <b>200ml milk</b> · <b>1 plate poha</b></div>
+</section>
+
+<!-- ACTIVITY -->
+<section id="activity" class="page">
+  <div class="section-title"><div><span class="eyebrow">MOVEMENT</span><h2>Activity Tracker</h2><p>Log workouts and get an automatic calorie estimate.</p></div><button class="primary" id="addActivity">＋ Add activity</button></div>
+  <div class="activity-summary">
+    <div class="panel"><span class="eyebrow">TODAY'S BURN</span><div class="big-number" id="activityBurnBadge">0 <small>kcal</small></div></div>
+    <div class="panel"><span class="eyebrow">ACTIVITIES</span><div class="big-number" id="activityCount">0 <small>logged</small></div></div>
+    <div class="panel"><span class="eyebrow">RECOMMENDATION</span><div class="big-number text-number" id="activityRecommendation">—</div></div>
+  </div>
+  <div class="recommendation compact" id="activityAdvice"></div>
+  <div class="panel"><div class="panel-head"><h3>Today's activity</h3></div><div id="activityList" class="list"></div></div>
+</section>
+
+<!-- LIFESTYLE -->
+<section id="lifestyle" class="page">
+  <div class="section-title"><div><span class="eyebrow">EVERYDAY MOVEMENT</span><h2>Daily Lifestyle</h2><p>Update your movement and FitLogic updates your plan automatically.</p></div></div>
+  <div class="life-grid">
+    <div class="panel"><h3>Movement inputs</h3>
+      <label>Walking <output id="walkOut">0 km</output><input id="walk" type="range" min="0" max="15" step=".1" value="0"></label>
+      <label>Stairs <output id="stairsOut">0 floors</output><input id="stairs" type="range" min="0" max="30" value="0"></label>
+      <label>Active commuting <output id="commuteOut">0 min</output><input id="commute" type="range" min="0" max="120" value="0"></label>
+      <label>Steps <output id="lifeStepsOut">0</output><input id="lifeSteps" type="range" min="0" max="20000" step="100" value="0"></label>
+    </div>
+    <div class="panel"><span class="eyebrow">MOVEMENT IMPACT</span><h3>Extra movement burn</h3><div class="big-number" id="lifeBurn">0 <small>kcal</small></div>
+      <div class="life-breakdown"><div><span>Walking</span><b id="walkBurn">0 kcal</b></div><div><span>Stairs</span><b id="stairsBurn">0 kcal</b></div><div><span>Commute</span><b id="commuteBurn">0 kcal</b></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- GOALS / PLAN -->
+<section id="goals" class="page">
+  <div class="section-title"><div><span class="eyebrow">PERSONALIZED PLAN</span><h2>My Plan</h2><p>Tell FitLogic about yourself. It recommends your daily targets.</p></div></div>
+  <div class="goal-grid">
+    <div class="panel">
+      <h3>About you</h3>
+      <div class="form-grid">
+        <label>Age<input id="age" class="text-input" type="number" min="13" max="100"></label>
+        <label>Sex<select id="sex" class="text-input"><option value="male">Male</option><option value="female">Female</option></select></label>
+        <label>Height (cm)<input id="height" class="text-input" type="number" min="100" max="230"></label>
+        <label>Weight (kg)<input id="bodyWeight" class="text-input" type="number" min="30" max="250"></label>
+      </div>
+      <label>Activity level<select id="activityLevel" class="text-input">
+        <option value="sedentary">Sedentary — little exercise</option>
+        <option value="light">Light — 1–3 days/week</option>
+        <option value="moderate" selected>Moderate — 3–5 days/week</option>
+        <option value="active">Active — 6–7 days/week</option>
+        <option value="very_active">Very active — hard training</option>
+      </select></label>
+      <h3 class="goal-heading">Your goal</h3>
+      <div class="goal-options"><button class="goal active" data-goal="Muscle Gain">💪 Muscle Gain</button><button class="goal" data-goal="Maintain">⚖️ Maintain</button><button class="goal" data-goal="Fat Loss">🔥 Fat Loss</button></div>
+      <label>Target weight (kg)<input id="targetWeight" class="text-input" type="number" min="30" max="250"></label>
+      <button class="primary full" id="saveGoal">Calculate my plan</button>
+    </div>
+    <div class="panel goal-preview">
+      <span class="eyebrow">YOUR RECOMMENDED PLAN</span>
+      <div class="target"><span id="targetCalPreview">—</span> <small>kcal / day</small></div>
+      <div class="recommendation score" id="planStatus"><span>✦</span><div><b>Not calculated yet</b><p>Complete your profile to get recommendations.</p></div></div>
+      <div class="target-row"><span>Protein</span><b id="targetProteinPreview">—</b></div>
+      <div class="target-row"><span>Estimated maintenance</span><b id="maintenancePreview">—</b></div>
+      <div class="target-row"><span>Goal adjustment</span><b id="adjustmentPreview">—</b></div>
+      <div class="target-row"><span>Target weight</span><b id="weightPreview">—</b></div>
+      <p class="disclaimer">Estimates are for a student project and general fitness planning, not medical advice.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ANALYTICS -->
+<section id="analytics" class="page">
+  <div class="section-title"><div><span class="eyebrow">LIVE + PREDICTIVE INSIGHTS</span><h2>Analytics Intelligence</h2><p>Updates automatically whenever you log food, activity or movement.</p></div><span class="live-pill"><i></i> LIVE</span></div>
+
+  <div class="analytics-explainer panel">
+    <div class="analytics-explainer-icon">✦</div>
+    <div><span class="eyebrow">WHAT THIS MEANS</span><h3>Real-time analytics turns your logs into decisions.</h3><p>FitLogic continuously compares what you have eaten and burned with your personalized targets. Predictive analytics then estimates where your day is heading if your current pace continues, so you can adjust before the day is over.</p></div>
+    <div class="analytics-method"><b>INPUT → ANALYZE → PREDICT → ACT</b><small>Food + activity + movement → energy balance + trends → end-of-day forecast → next-best action</small></div>
+  </div>
+
+  <div class="analytics-live-grid">
+    <div class="analytics-live-card"><span class="eyebrow">ENERGY IN</span><b id="analyticsCalories">0</b><small>kcal eaten</small><div class="mini-progress"><i id="analyticsCalBar"></i></div><span class="micro-note" id="analyticsCalStatus">Waiting for data</span></div>
+    <div class="analytics-live-card"><span class="eyebrow">ENERGY OUT</span><b id="analyticsBurned">0</b><small>kcal activity + movement</small><div class="mini-progress"><i id="analyticsBurnBar"></i></div><span class="micro-note" id="analyticsBurnStatus">No movement logged</span></div>
+    <div class="analytics-live-card"><span class="eyebrow">NET BALANCE</span><b id="analyticsNet">—</b><small>intake minus logged burn</small><span class="status-chip" id="analyticsBalanceStatus">Set your plan</span></div>
+    <div class="analytics-live-card"><span class="eyebrow">ADHERENCE</span><b id="analyticsAdherence">—</b><small>today's plan alignment</small><span class="status-chip" id="analyticsAdherenceStatus">Needs profile</span></div>
+  </div>
+
+  <div class="prediction-grid">
+    <div class="panel prediction-panel">
+      <div class="panel-head"><div><span class="eyebrow">PREDICTIVE ANALYTICS</span><h3>End-of-day forecast</h3></div><span class="forecast-badge" id="forecastConfidence">—</span></div>
+      <div class="forecast-main"><div><span>Projected calories</span><b id="forecastCalories">—</b><small id="forecastCalDelta">Based on today's pace</small></div><div><span>Projected protein</span><b id="forecastProtein">—</b><small id="forecastProteinDelta">Based on today's pace</small></div></div>
+      <div class="forecast-meter"><div><span>Current</span><i id="forecastCurrentBar"></i></div><div><span>Projected</span><i id="forecastProjectedBar"></i></div></div>
+      <div class="forecast-callout" id="forecastCallout">Log your first meal to activate the forecast.</div>
+    </div>
+    <div class="panel prediction-panel">
+      <div class="panel-head"><div><span class="eyebrow">GOAL TRAJECTORY</span><h3>Where you're heading</h3></div><span class="trend-arrow" id="trendArrow">—</span></div>
+      <div class="trajectory"><div><span>7-day energy trend</span><b id="trendValue">—</b></div><div><span>Estimated direction</span><b id="trendDirection">—</b></div><div><span>Target weight</span><b id="trendTargetWeight">—</b></div><div><span>Estimated timeline</span><b id="trendTimeline">—</b></div></div>
+      <p class="micro-disclaimer">Trend estimates are rough planning signals, not guaranteed weight change.</p>
+    </div>
+  </div>
+
+  <div class="two-col">
+    <div class="panel chart-panel"><div class="panel-head"><div><span class="eyebrow">HISTORY</span><h3>7-day energy balance</h3></div><span class="chart-help">Shows surplus / deficit</span></div><canvas id="energyChart"></canvas></div>
+    <div class="panel chart-panel"><div class="panel-head"><div><span class="eyebrow">NUTRITION</span><h3>Macro distribution</h3></div><span class="chart-help">Calorie contribution</span></div><canvas id="macroChart"></canvas></div>
+  </div>
+
+  <div class="panel chart-panel"><div class="panel-head"><div><span class="eyebrow">MOVEMENT</span><h3>Activity expenditure</h3></div><span class="chart-help">Calories by logged activity</span></div><canvas id="activityChart"></canvas></div>
+
+  <div class="analytics-action panel"><div><span class="eyebrow">NEXT BEST ACTION</span><h3 id="analyticsActionTitle">—</h3><p id="analyticsActionText">Log food and activity to get a personalized action.</p></div><div class="action-metrics"><div><span>Calories left</span><b id="analyticsLeft">—</b></div><div><span>Protein left</span><b id="analyticsProtein">—</b></div><div><span>Steps</span><b id="analyticsSteps">0</b></div></div></div>
+
+  <div class="analytics-features">
+    <div><span>01</span><b>Live energy balance</b><p>See intake, activity burn and net balance change instantly after every entry.</p></div>
+    <div><span>02</span><b>End-of-day prediction</b><p>Uses your current intake pace to estimate whether you will finish under or over target.</p></div>
+    <div><span>03</span><b>Goal trajectory</b><p>Connects your recent energy trend with your selected muscle-gain, maintain or fat-loss goal.</p></div>
+    <div><span>04</span><b>Action guidance</b><p>Converts numbers into a simple next step: eat more protein, add movement or stay on track.</p></div>
+  </div>
+</section>
+</main>
+</div>
+
+<div id="modal" class="modal hidden"><div class="modal-box"><button class="modal-close" id="modalClose">×</button><h3 id="modalTitle">Add item</h3><div id="modalBody"></div></div></div>
+<div id="toast"></div>
+<script src="script.js"></script>
+</body>
+</html>

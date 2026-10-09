@@ -1,0 +1,42 @@
+{
+  "s@mail.com": {
+    "id": "b4c805ef-5aad-4fcd-a3aa-4266ff19afc7",
+    "name": "Soham",
+    "email": "s@mail.com",
+    "salt": "7a59927b653a63322926abb259811423",
+    "passwordHash": "f4f5d88728ce71a15b3b7cbaee74ba49ccde5f6b9a98f3727b5399614b05b9c21cc987f284c3321586f8f59857e172f3734b8631a1829d3141f55bdd61060214",
+    "createdAt": "2026-10-08T20:40:31.935Z",
+    "state": {
+      "foods": [],
+      "activities": [],
+      "movement": {
+        "walking": 0,
+        "stairs": 0,
+        "commute": 0,
+        "steps": 0
+      },
+      "goals": {
+        "configured": false,
+        "goal": "Muscle Gain",
+        "age": 19,
+        "sex": "male",
+        "height": 180,
+        "bodyWeight": 67,
+        "targetWeight": 72,
+        "activityLevel": "moderate",
+        "calTarget": null,
+        "proteinTarget": null,
+        "maintenance": null
+      },
+      "history": [
+        175,
+        230,
+        -80,
+        310,
+        120,
+        290,
+        145
+      ]
+    }
+  }
+}
